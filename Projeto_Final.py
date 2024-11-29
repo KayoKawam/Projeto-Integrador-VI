@@ -5,7 +5,7 @@ from io import StringIO
 import re
 import streamlit as st
 
-os.environ["LLAMA_CLOUD_API_KEY"] = "llx-26PEqrjdIHy5qULSYYkJP5OEm18faAvgZvihdqyxhG6xDI1r"
+os.environ["LLAMA_CLOUD_API_KEY"] = "sua chave"
 
 # Função de Extração
 def extrair_tabelas_pdf(caminho_pdf):
