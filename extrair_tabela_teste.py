@@ -1,6 +1,6 @@
 import os
 
-os.environ["LLAMA_CLOUD_API_KEY"] = "llx-26PEqrjdIHy5qULSYYkJP5OEm18faAvgZvihdqyxhG6xDI1r"
+os.environ["LLAMA_CLOUD_API_KEY"] = ""
 
 from llama_parse import LlamaParse
 
