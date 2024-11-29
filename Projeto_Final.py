@@ -36,15 +36,16 @@ def transformar_markdown_excel(texto, num_pagina):
         tabela = tabela.dropna(how="all", axis=1).dropna(how="all", axis=0)
         tabela.to_excel(f"saida_pdf/Pagina{num_pagina}Tabela{i + 1}.xlsx", index=False)
 
-# Função de Processamento de Dados
+# Função de Processamento de Dados com Nome Dinâmico
 def processar_pdfs(pasta_pdf=None, arquivo_pdf=None):
-    if arquivo_pdf:
-        caminho_pdf = arquivo_pdf.name
+    if arquivo_pdf:  # Caso tenha sido passado um único arquivo PDF
+        caminho_pdf = os.path.join(pasta_pdf, arquivo_pdf)  # Caminho completo do arquivo
         extrair_tabelas_pdf(caminho_pdf)
-    elif pasta_pdf:
+    elif pasta_pdf:  # Caso uma pasta inteira tenha sido fornecida
         arquivos_pdf = [f for f in os.listdir(pasta_pdf) if f.endswith('.pdf')]
         for arquivo in arquivos_pdf:
-            extrair_tabelas_pdf(os.path.join(pasta_pdf, arquivo))
+            caminho_pdf = os.path.join(pasta_pdf, arquivo)  # Caminho dinâmico para cada arquivo
+            extrair_tabelas_pdf(caminho_pdf)
 
     # Converter markdown gerado em Excel
     pasta_markdown = "meu_pdf"
@@ -93,12 +94,13 @@ if os.path.exists(pasta_pdf):
 
 # Botão para processar PDFs
 if st.sidebar.button("Processar Arquivo PDF"):
-    if arquivo_selecionado:
-        with st.spinner("Processando arquivo PDF selecionado..."):
-            processar_pdfs(pasta_pdf=pasta_pdf)
+    if arquivo_selecionado:  # Se o usuário selecionou um arquivo
+        with st.spinner(f"Processando arquivo PDF: {arquivo_selecionado}..."):
+            processar_pdfs(pasta_pdf=pasta_pdf, arquivo_pdf=arquivo_selecionado)  # Nome dinâmico
             st.sidebar.success(f"Processamento concluído para o arquivo: {arquivo_selecionado}")
     else:
         st.sidebar.warning("Por favor, faça upload ou selecione um arquivo PDF.")
+
 
 # Exibição de tabelas Excel
 st.write("""
